@@ -231,14 +231,63 @@
 
 # Задание 4. Создание и документирование API
 
-### 1. Тип API
+## 1. Тип API
 
-Укажите, какой тип API вы будете использовать для взаимодействия микросервисов. Объясните своё решение.
+Для взаимодействия между микросервисами выбраны следующие типы API:
 
-### 2. Документация API
+- **REST API (HTTP + JSON)** — для синхронного взаимодействия между микросервисами (например, аутентификация, работа с профилем, запрос телеметрии).
+- **Kafka (AsyncAPI)** — для асинхронной передачи телеметрии от `device-gateway-service` к `telemetry-service`, а также для отправки команд устройствам.
 
-Здесь приложите ссылки на документацию API для микросервисов, которые вы спроектировали в первой части проектной работы.
-Для документирования используйте Swagger/OpenAPI или AsyncAPI.
+### Обоснование выбора:
+- REST API хорошо подходит для CRUD-операций, позволяет удобно использовать Swagger/OpenAPI для документирования и генерации клиентов.
+- Kafka обеспечивает надёжную и масштабируемую доставку событий между компонентами, снижая связанность между сервисами. Используется для телеметрии и команд к устройствам, где синхронность не требуется.
+
+---
+
+## 2. Документация API
+
+### Auth & User API (`user-service`)
+Документировано с использованием OpenAPI 3.0.
+
+[openapi-user-service.yaml](schemas/openai/openapi-user-service.yaml)
+
+---
+
+### Telemetry API (`telemetry-service`)
+
+Kafka (AsyncAPI):
+- Топик `device.telemetry` — события с телеметрией
+- Формат события:
+```json
+{
+  "deviceId": "string",
+  "timestamp": "ISO 8601",
+  "value": number
+}
+```
+
+**Файл OpenAPI**: [openapi-telemetry-service.yaml](schemas/openai/openapi-telemetry-service.yaml)
+
+---
+
+### Device Gateway API (`device-gateway-service`)
+
+Kafka Consumer:
+- Топик `device.commands` — принимает команды (JSON: `address`, `command`, `extra_params`)
+  Kafka Producer:
+- Топик `device.telemetry` — публикует телеметрию
+
+Протокол обмена с устройствами:
+- MQTT или HTTP
+- Формат сообщений зависит от устройства и конфигурации (документируется отдельно)
+
+---
+
+### Smart Home API (`smart-home-service`)
+
+**Файл Swagger (Protobuf)**: [openapi-smart-home-service.json](schemas/openai/openapi-smart-home-service.json)
+
+---
 
 # Задание 5. Работа с docker и docker-compose
 

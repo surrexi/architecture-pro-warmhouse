@@ -1,0 +1,987 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Smart Home Service API",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "SmartHome"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/smart-Device/v1/device": {
+      "get": {
+        "operationId": "SmartHome_GetDeviceV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcGetDeviceV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "deviceID",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SmartHome"
+        ]
+      },
+      "post": {
+        "operationId": "SmartHome_AddDeviceV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcAddDeviceV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/grpcAddDeviceV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "SmartHome"
+        ]
+      },
+      "put": {
+        "operationId": "SmartHome_UpdateDeviceV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcUpdateDeviceV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/grpcUpdateDeviceV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "SmartHome"
+        ]
+      }
+    },
+    "/api/smart-Scenario/v1/scenario": {
+      "put": {
+        "operationId": "SmartHome_UpdateScenarioV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcUpdateScenarioV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/grpcUpdateScenarioV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "SmartHome"
+        ]
+      }
+    },
+    "/api/smart-home/v1/device": {
+      "delete": {
+        "operationId": "SmartHome_DeleteDeviceV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcDeleteDeviceV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SmartHome"
+        ]
+      }
+    },
+    "/api/smart-home/v1/device-types": {
+      "get": {
+        "operationId": "SmartHome_ListDeviceTypesV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcListDeviceTypesV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "SmartHome"
+        ]
+      }
+    },
+    "/api/smart-home/v1/device/send-command": {
+      "post": {
+        "operationId": "SmartHome_SendDeviceCommandV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcSendDeviceCommandV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/grpcSendDeviceCommandV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "SmartHome"
+        ]
+      }
+    },
+    "/api/smart-home/v1/devices": {
+      "get": {
+        "operationId": "SmartHome_ListDevicesV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcListDevicesV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "homeID",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SmartHome"
+        ]
+      }
+    },
+    "/api/smart-home/v1/home": {
+      "get": {
+        "operationId": "SmartHome_GetHomeV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcGetHomeV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SmartHome"
+        ]
+      },
+      "delete": {
+        "operationId": "SmartHome_DeleteHomeV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcDeleteHomeV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SmartHome"
+        ]
+      },
+      "post": {
+        "operationId": "SmartHome_AddHomeV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcAddHomeV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/grpcAddHomeV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "SmartHome"
+        ]
+      },
+      "put": {
+        "operationId": "SmartHome_UpdateHomeV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcUpdateHomeV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/grpcUpdateHomeV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "SmartHome"
+        ]
+      }
+    },
+    "/api/smart-home/v1/homes": {
+      "get": {
+        "operationId": "SmartHome_ListHomesV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcListHomesV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "SmartHome"
+        ]
+      }
+    },
+    "/api/smart-home/v1/scenario": {
+      "get": {
+        "operationId": "SmartHome_GetScenarioV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcGetScenarioV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "scenarioID",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SmartHome"
+        ]
+      },
+      "delete": {
+        "operationId": "SmartHome_DeleteScenarioV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcDeleteScenarioV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "scenarioID",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SmartHome"
+        ]
+      }
+    },
+    "/api/smart-home/v1/scenarios": {
+      "get": {
+        "operationId": "SmartHome_ListScenariosV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/grpcListScenariosV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "homeID",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "SmartHome"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "ListDevicesV1ResponseDeviceItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/ListDevicesV1ResponseDeviceItemStatus"
+        }
+      }
+    },
+    "ListDevicesV1ResponseDeviceItemStatus": {
+      "type": "string",
+      "enum": [
+        "STATUS_INVALID",
+        "STATUS_ONLINE",
+        "STATUS_OFFLINE",
+        "STATUS_ERROR",
+        "STATUS_CONNECTING"
+      ],
+      "default": "STATUS_INVALID"
+    },
+    "ListHomesV1ResponseHomeItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        }
+      }
+    },
+    "ListScenariosV1ResponseScenarioItem": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "triggerType": {
+          "$ref": "#/definitions/ListScenariosV1ResponseScenarioItemTriggerType"
+        },
+        "triggerData": {
+          "type": "string"
+        },
+        "isEnabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "ListScenariosV1ResponseScenarioItemTriggerType": {
+      "type": "string",
+      "enum": [
+        "TRIGGER_TYPE_INVALID",
+        "TRIGGER_TYPE_SCHEDULE",
+        "TRIGGER_TYPE_EVENT",
+        "TRIGGER_TYPE_MANUAL"
+      ],
+      "default": "TRIGGER_TYPE_INVALID"
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "grpcAddDeviceV1Request": {
+      "type": "object",
+      "properties": {
+        "homeID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "typeID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        }
+      }
+    },
+    "grpcAddDeviceV1Response": {
+      "type": "object",
+      "properties": {
+        "deviceID": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "grpcAddHomeV1Request": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        }
+      }
+    },
+    "grpcAddHomeV1Response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "grpcDeleteDeviceV1Response": {
+      "type": "object"
+    },
+    "grpcDeleteHomeV1Response": {
+      "type": "object"
+    },
+    "grpcDeleteScenarioV1Response": {
+      "type": "object"
+    },
+    "grpcGetDeviceV1Response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "serialNumber": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/grpcGetDeviceV1ResponseStatus"
+        },
+        "type": {
+          "$ref": "#/definitions/grpcGetDeviceV1ResponseDeviceTypeItem"
+        },
+        "availableCommands": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/grpcGetDeviceV1ResponseCMD"
+          }
+        }
+      }
+    },
+    "grpcGetDeviceV1ResponseCMD": {
+      "type": "string",
+      "enum": [
+        "CMD_INVALID",
+        "CMD_ON",
+        "CMD_OF"
+      ],
+      "default": "CMD_INVALID"
+    },
+    "grpcGetDeviceV1ResponseDeviceTypeItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/grpcGetDeviceV1ResponseDeviceTypeItemType"
+        },
+        "protocols": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/grpcGetDeviceV1ResponseDeviceTypeItemProtocol"
+          }
+        }
+      }
+    },
+    "grpcGetDeviceV1ResponseDeviceTypeItemProtocol": {
+      "type": "string",
+      "enum": [
+        "PROTOCOL_INVALID",
+        "PROTOCOL_HTTP",
+        "PROTOCOL_MQTT"
+      ],
+      "default": "PROTOCOL_INVALID"
+    },
+    "grpcGetDeviceV1ResponseDeviceTypeItemType": {
+      "type": "string",
+      "enum": [
+        "TYPE_INVALID",
+        "TYPE_RELAY",
+        "TYPE_SENSOR"
+      ],
+      "default": "TYPE_INVALID"
+    },
+    "grpcGetDeviceV1ResponseStatus": {
+      "type": "string",
+      "enum": [
+        "STATUS_INVALID",
+        "STATUS_ONLINE",
+        "STATUS_OFFLINE",
+        "STATUS_ERROR",
+        "STATUS_CONNECTING"
+      ],
+      "default": "STATUS_INVALID"
+    },
+    "grpcGetHomeV1Response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        }
+      }
+    },
+    "grpcGetScenarioV1Response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "triggerType": {
+          "$ref": "#/definitions/grpcGetScenarioV1ResponseTriggerType"
+        },
+        "triggerData": {
+          "type": "string"
+        },
+        "isEnabled": {
+          "type": "boolean"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/grpcGetScenarioV1ResponseConditionDeviceItem"
+          }
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/grpcGetScenarioV1ResponseActionDeviceItem"
+          }
+        }
+      }
+    },
+    "grpcGetScenarioV1ResponseActionDeviceItem": {
+      "type": "object",
+      "properties": {
+        "deviceID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "cmd": {
+          "$ref": "#/definitions/grpcGetScenarioV1ResponseActionDeviceItemCMD"
+        }
+      }
+    },
+    "grpcGetScenarioV1ResponseActionDeviceItemCMD": {
+      "type": "string",
+      "enum": [
+        "CMD_INVALID",
+        "CMD_ON",
+        "CMD_OFF"
+      ],
+      "default": "CMD_INVALID"
+    },
+    "grpcGetScenarioV1ResponseConditionDeviceItem": {
+      "type": "object",
+      "properties": {
+        "deviceID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "grpcGetScenarioV1ResponseTriggerType": {
+      "type": "string",
+      "enum": [
+        "TRIGGER_TYPE_INVALID",
+        "TRIGGER_TYPE_SCHEDULE",
+        "TRIGGER_TYPE_EVENT",
+        "TRIGGER_TYPE_MANUAL"
+      ],
+      "default": "TRIGGER_TYPE_INVALID"
+    },
+    "grpcListDeviceTypesV1Response": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/grpcListDeviceTypesV1ResponseDeviceTypeItem"
+          }
+        }
+      }
+    },
+    "grpcListDeviceTypesV1ResponseDeviceTypeItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/grpcListDeviceTypesV1ResponseDeviceTypeItemType"
+        },
+        "protocols": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/grpcListDeviceTypesV1ResponseDeviceTypeItemProtocol"
+          }
+        }
+      }
+    },
+    "grpcListDeviceTypesV1ResponseDeviceTypeItemProtocol": {
+      "type": "string",
+      "enum": [
+        "PROTOCOL_INVALID",
+        "PROTOCOL_HTTP",
+        "PROTOCOL_MQTT"
+      ],
+      "default": "PROTOCOL_INVALID"
+    },
+    "grpcListDeviceTypesV1ResponseDeviceTypeItemType": {
+      "type": "string",
+      "enum": [
+        "TYPE_INVALID",
+        "TYPE_RELAY",
+        "TYPE_SENSOR"
+      ],
+      "default": "TYPE_INVALID"
+    },
+    "grpcListDevicesV1Response": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/ListDevicesV1ResponseDeviceItem"
+          }
+        }
+      }
+    },
+    "grpcListHomesV1Response": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/ListHomesV1ResponseHomeItem"
+          }
+        }
+      }
+    },
+    "grpcListScenariosV1Response": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/ListScenariosV1ResponseScenarioItem"
+          }
+        }
+      }
+    },
+    "grpcSendDeviceCommandV1Request": {
+      "type": "object",
+      "properties": {
+        "deviceID": {
+          "type": "string",
+          "format": "int64"
+        },
+        "cmd": {
+          "$ref": "#/definitions/grpcSendDeviceCommandV1RequestCMD"
+        }
+      }
+    },
+    "grpcSendDeviceCommandV1RequestCMD": {
+      "type": "string",
+      "enum": [
+        "CMD_INVALID",
+        "CMD_ON",
+        "CMD_OFF"
+      ],
+      "default": "CMD_INVALID"
+    },
+    "grpcSendDeviceCommandV1Response": {
+      "type": "object"
+    },
+    "grpcUpdateDeviceV1Request": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "grpcUpdateDeviceV1Response": {
+      "type": "object"
+    },
+    "grpcUpdateHomeV1Request": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "updateFields": {
+          "$ref": "#/definitions/grpcUpdateHomeV1RequestUpdateFields"
+        }
+      }
+    },
+    "grpcUpdateHomeV1RequestUpdateFields": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        }
+      }
+    },
+    "grpcUpdateHomeV1Response": {
+      "type": "object"
+    },
+    "grpcUpdateScenarioV1Request": {
+      "type": "object",
+      "properties": {
+        "scenarioID": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "grpcUpdateScenarioV1Response": {
+      "type": "object"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    }
+  }
+}
