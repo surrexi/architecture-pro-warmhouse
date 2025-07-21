@@ -1,0 +1,47 @@
+@startuml C4_Code_LoginFlow
+
+title Login Flow (C4 Code)
+
+class AuthController {
+  +login(email: string, password: string): TokenResponse
+}
+
+class UserRepository {
+  +findByEmail(email: string): User?
+}
+
+class PasswordHasher {
+  +compare(password: string, hash: string): boolean
+}
+
+class TokenManager {
+  +generateToken(userId: UUID): Token
+}
+
+class ErrorHandler {
+  +unauthorized(): ErrorResponse
+}
+
+class User {
+  -id: UUID
+  -email: string
+  -password_hash: string
+}
+
+class TokenResponse {
+  -accessToken: string
+  -expiresIn: int
+}
+
+class ErrorResponse {
+  -status: int
+  -message: string
+}
+
+AuthController --> UserRepository : findByEmail(email)
+AuthController --> PasswordHasher : compare(...)
+AuthController --> TokenManager : generateToken(user.id)
+AuthController --> ErrorHandler : unauthorized()
+AuthController --> TokenResponse : возвращает токен
+
+@enduml
