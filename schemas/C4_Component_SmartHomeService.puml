@@ -1,0 +1,33 @@
+@startuml C4_Component_SmartHomeService
+
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+LAYOUT_WITH_LEGEND()
+
+Person(user, "Пользователь", "Управление домами")
+
+Container_Boundary(smartHomeService, "Smart Home Service", "Go", "Работа с домами, устройствами и сценариями") {
+    Component(homeController, "HomeController", "API для управления домами")
+    Component(deviceController, "DeviceController", "API для управления устройствами")
+    Component(scenarioController, "ScenarioController", "API для сценариев и автоматизации")
+    Component(smartRepo, "SmartRepo", "Чтение и запись в SmartHomeDB")
+    Component(commandPublisher, "CommandPublisher", "Публикация команд в Kafka")
+}
+
+ContainerDb(smartHomeDb, "SmartHomeDB", "PostgreSQL", "Хранение домов, устройств и сценариев")
+ContainerQueue(kafka, "Kafka", "Брокер сообщений")
+
+Rel(user, homeController, "Работа с домами", "REST")
+Rel(user, deviceController, "Работа с устройствами", "REST")
+Rel(user, scenarioController, "Работа со сценариями", "REST")
+
+Rel(homeController, smartRepo, "Работа с домами")
+Rel(deviceController, smartRepo, "Работа с устройствами")
+Rel(scenarioController, smartRepo, "Работа со сценариями")
+
+Rel(scenarioController, deviceController, "Отправка команд")
+Rel(deviceController, commandPublisher, "Отправка команд")
+Rel(commandPublisher, kafka, "Публикация команд", "Kafka")
+
+Rel_L(smartRepo, smartHomeDb, "Чтение / запись", "SQL")
+
+@enduml

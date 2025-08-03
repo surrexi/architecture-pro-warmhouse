@@ -1,0 +1,23 @@
+@startuml C4_Code_JWTTokenFlow
+
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Dynamic.puml
+LAYOUT_WITH_LEGEND()
+
+title Обработка JWT: генерация и валидация
+
+Person(user, "Пользователь")
+
+Component(authController, "AuthController", "Go", "Обрабатывает логин")
+Component(tokenManager, "TokenManager", "Go", "Генерация и валидация JWT")
+System_Ext(vault, "Vault / JWKS", "Сторонний источник ключей")
+Component(serviceController, "Любой контроллер", "Go", "Проверяет авторизацию через JWT")
+
+Rel(user, authController, "POST /login (логин)")
+Rel(authController, tokenManager, "Генерация токена")
+Rel(tokenManager, vault, "Получение приватного ключа для подписи", "если не закодирован в сервисе")
+
+Rel(user, serviceController, "Запрос в защищённый endpoint")
+Rel(serviceController, tokenManager, "Проверка подписи токена")
+Rel(tokenManager, vault, "Получение публичного ключа", "если используется внешняя система")
+
+@enduml

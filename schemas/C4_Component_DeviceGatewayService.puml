@@ -1,0 +1,25 @@
+@startuml C4_Component_DeviceGatewayService
+
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(deviceGateway, "Device Gateway Service", "Go", "Работа с физическими устройствами, Kafka") {
+    Component(commandConsumer, "CommandConsumer", "Подписан на Kafka, получает команды")
+    Component(deviceClient, "DeviceClient", "Отправка команд по MQTT/HTTP")
+    Component(telemetryReceiver, "TelemetryReceiver", "Приём телеметрии от устройств")
+    Component(telemetryProducer, "TelemetryProducer", "Публикация телеметрии в Kafka")
+    Component(deviceRegistry, "DeviceRegistry", "Проверка зарегистрированных устройств")
+}
+
+ContainerQueue(kafka, "Kafka", "Брокер событий")
+System_Ext(devices, "Модули управления", "Физические устройства: датчики и контроллеры")
+
+Rel(commandConsumer, kafka, "Подписан на топики команд", "Kafka")
+Rel(commandConsumer, deviceClient, "Передаёт команды")
+Rel_U(deviceClient, devices, "MQTT / HTTP команды", "MQTT/HTTP")
+
+Rel_U(telemetryReceiver, devices, "Забирает телеметрию", "MQTT/HTTP")
+Rel_L(telemetryReceiver, telemetryProducer, "Публикация данных", "")
+Rel(telemetryProducer, kafka, "Отправляет в топики телеметрии", "Kafka")
+
+@enduml

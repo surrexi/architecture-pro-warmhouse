@@ -1,0 +1,56 @@
+openapi: 3.0.3
+info:
+  title: Telemetry Service API
+  version: 1.0.0
+  description: API для получения телеметрии устройств
+
+paths:
+  /api/telemetry/v1/devices/{deviceId}:
+    get:
+      summary: Получение телеметрии по устройству
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Телеметрия получена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDeviceTelemetryV1Response'
+        '401':
+          description: Неавторизован
+        '404':
+          description: Устройство не найдено
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    TelemetryRecord:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        value:
+          type: number
+
+    GetDeviceTelemetryV1Response:
+      type: object
+      properties:
+        deviceId:
+          type: string
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TelemetryRecord'

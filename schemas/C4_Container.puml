@@ -1,0 +1,38 @@
+@startuml C4_Container
+
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+LAYOUT_WITH_LEGEND()
+
+Person(user, "Пользователь", "Управляет умным домом через веб или мобильный интерфейс")
+
+System_Boundary(smartHomeSystem, "Система Умного Дома") {
+  Container(userService, "User Service", "Go", "Регистрация, авторизация, профиль")
+  Container(deviceGateway, "Device Gateway Service", "Go", "Связь с датчиками и контроллерами, Kafka")
+  Container(telemetryService, "Telemetry Service", "Go", "Приём телеметрии и запись в БД (TimescaleDB)")
+  Container(smartHomeService, "Smart Home Service", "Go", "Управление домами, устройствами и сценариями")
+
+  ContainerDb(smartHomeDb, "SmartHomeDB", "PostgreSQL", "Хранение информации по пользователям, домам, датчикам и сценариям")
+  ContainerDb(telemetryDb, "TelemetryDB", "PostgreSQL + Timescale", "Хранение телеметрии")
+
+  ContainerQueue(kafka, "Kafka", "Брокер сообщений", "Асинхронная передача команд и показаний датчиков")
+}
+
+System_Ext(devices, "Модули управления", "Датчики и контроллеры")
+
+Rel_D(user, userService, "Авторизация, профиль", "REST")
+Rel_D(user, smartHomeService, "Управление домами, устройствами и сценариями", "REST")
+Rel_D(user, telemetryService, "Просмотр телеметрии", "REST")
+
+
+Rel(userService, smartHomeDb, "Работа с пользователями", "SQL")
+Rel_L(smartHomeService, smartHomeDb, "Работа с устройствами и сценариями", "SQL")
+Rel_R(telemetryService, telemetryDb, "Запись метрик", "SQL")
+
+Rel_L(deviceGateway, kafka, "Публикация данных по устройствам / Прием команд")
+Rel(smartHomeService, kafka, "Публикация команд / Прием данных по устройствам")
+Rel(telemetryService, kafka, "Прием данных по устройствам")
+
+
+Rel_R(deviceGateway, devices, "Обменивается данными (команды / телеметрия)", "MQTT/HTTP")
+
+@enduml

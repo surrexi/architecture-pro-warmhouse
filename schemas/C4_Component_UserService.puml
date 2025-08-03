@@ -1,0 +1,27 @@
+@startuml C4_Component_UserService
+
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+LAYOUT_WITH_LEGEND()
+
+Person(user, "Пользователь", "Регистрация/авторизация и работа с профилем")
+
+Container_Boundary(userService, "User Service", "Go", "Регистрация, авторизация, профиль") {
+    Component(authController, "AuthController", "Обработка регистрации и логина")
+    Component(profileController, "ProfileController", "Получение и редактирование профиля")
+    Component(userRepo, "UserRepository", "Доступ к данным пользователей")
+    Component(tokenManager, "TokenManager", "Генерация и валидация JWT")
+    Component(passwordHasher, "PasswordHasher", "Хеширование и проверка паролей")
+}
+
+ContainerDb(smartHomeDb, "SmartHomeDB", "PostgreSQL", "Хранение пользователей и данных профиля")
+
+Rel(user, authController, "Регистрация / авторизация", "REST")
+Rel(user, profileController, "Работа с профилем", "REST")
+
+Rel(authController, userRepo, "Создание и поиск пользователей")
+Rel(authController, tokenManager, "Генерация токена")
+Rel(authController, passwordHasher, "Проверка пароля")
+Rel(profileController, userRepo, "Чтение и обновление данных")
+Rel(userRepo, smartHomeDb, "Чтение / запись", "SQL")
+
+@enduml

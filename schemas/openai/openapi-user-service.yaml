@@ -1,0 +1,156 @@
+openapi: 3.0.3
+info:
+  title: User Service API
+  version: 1.0.0
+  description: API для регистрации, авторизации и управления профилем
+
+paths:
+  /api/user/v1/registration:
+    post:
+      summary: Регистрация пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationV1Request'
+      responses:
+        '200':
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegistrationV1Response'
+        '401':
+          description: Неверные email или пароль
+  /api/user/v1/login:
+    post:
+      summary: Вход пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginV1Request'
+      responses:
+        '200':
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginV1Response'
+        '401':
+          description: Неверные email или пароль
+
+  /api/user/v1/profile:
+    get:
+      summary: Получить данные профиля
+      security:
+        - bearerAuth: [ ]
+      parameters: []
+      responses:
+        '200':
+          description: Профиль пользователя
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetUserProfileV1Response'
+        '401':
+          description: Неавторизован
+
+    patch:
+      summary: Обновить профиль
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserProfileV1Request'
+      responses:
+        '200':
+          description: Профиль обновлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserProfileV1Response'
+        '401':
+          description: Некорректные данные
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    RegistrationV1Request:
+      type: object
+      required:
+        - full_name
+        - email
+        - password
+      properties:
+        full_name:
+          type: string
+          example: Sultanov Damir
+        email:
+          type: string
+          example: user@example.com
+        password:
+          type: string
+          example: pass1234
+    RegistrationV1Response:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIs...
+    LoginV1Request:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: user@example.com
+        password:
+          type: string
+          example: pass1234
+
+    LoginV1Response:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIs...
+
+    GetUserProfileV1Response:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+        registered_at:
+          type: string
+          format: date-time
+
+    UpdateUserProfileV1Request:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+
+    UpdateUserProfileV1Response:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string

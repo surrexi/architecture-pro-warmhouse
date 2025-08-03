@@ -1,0 +1,84 @@
+@startuml ERDiagram
+
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+hide methods
+hide stereotypes
+
+' Таблица пользователей
+Table(User, "Пользователь") {
+  + id : Bigint [PK]
+  + email : String
+  + password_hash : String
+  + full_name : String
+  + registered_at : Timestamp
+  --
+  * email : unique
+}
+
+' Таблица домов
+Table(Home, "Дом") {
+  + id : Bigint [PK]
+  + user_id : Bigint
+  + name : String
+  + location : String
+}
+
+' Типы устройств
+Table(DeviceType, "Тип устройства") {
+  + id : Int [PK]
+  + type : Enum [relay, sensor]
+  + name : String
+  + protocols : String[] [Enum [HTTP, MQTT]]
+  --
+  * type + name : unique
+}
+
+' Устройства
+Table(Device, "Устройство") {
+  + id : Bigint [PK]
+  + home_id : Bigint
+  + type_id : Int
+  + serial_number : String
+  + address : String
+  + status : Enum [online, offline, error, connecting]
+  + name : String
+}
+
+' Телеметрия
+Table(Telemetry, "Данные телеметрии") {
+  + id : Bigint [PK]
+  + device_id : Bigint
+  + ts : Timestamp
+  + value : Float
+}
+
+' Сценарии
+Table(Scenario, "Сценарий") {
+  + id : Bigint [PK]
+  + user_id : Bigint
+  + name : String
+  + trigger_type : Enum [schedule, event, manual]
+  + trigger_data : JSONB
+  + is_enabled : Boolean
+}
+
+' Join-таблица сценариев и устройств
+Table(ScenarioDevice, "Связь сценарий-устройство") {
+  + scenario_id : Bigint
+  + device_id : Bigint
+  + kind : Enum [action, condition]
+  + content : JSONB
+  --
+  * scenario_id + device_id : unique
+}
+
+' Связи
+User --> Home
+Home --> Device
+DeviceType --> Device
+Device --> Telemetry
+User --> Scenario
+Scenario --> ScenarioDevice
+Device <--> ScenarioDevice
+
+@enduml
